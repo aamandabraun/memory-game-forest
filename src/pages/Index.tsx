@@ -11,7 +11,7 @@ const Index = () => {
   const { state, flip, start, reset } = useMemoryGame();
 
   useEffect(() => {
-    document.title = "Clareira Caótica — Jogo da Memória 3D";
+    document.title = "Bicho Solto";
   }, []);
 
   return (

@@ -12,7 +12,6 @@ interface Props {
   onCardClick: (id: number) => void;
 }
 
-/** Posição na grade 4x4 sobre a plataforma central */
 function slotToPosition(slot: number): [number, number, number] {
   const col = slot % 4;
   const row = Math.floor(slot / 4);
@@ -31,7 +30,6 @@ function CameraShake({ shaking }: { shaking: boolean }) {
   return null;
 }
 
-/** Tabuleiro inteiro: roda 180° em Z quando a "mesa vira" */
 function Board({
   cards,
   tableFlipped,
@@ -84,15 +82,13 @@ export function GameScene({ cards, shaking, tableFlipped, onCardClick }: Props) 
   const isPortrait = h > w;
   const isMobile = w < 640;
 
-  // Estratégia mobile: jardim em escala 1, tabuleiro encolhido pra caber
-  // certinho na plataforma azul (raio ~3.4). Câmera mais alta e fechada.
   let camPos: [number, number, number] = [0, 4.5, 7];
   let fov = 42;
   let boardScale = 1;
   if (isPortrait) {
-    camPos = [0, 6.5, 7.5];
-    fov = 46;
-    boardScale = 0.78;
+  camPos = [0, 8, 11];
+  fov = 44;
+  boardScale = 0.78;
   } else if (isMobile) {
     camPos = [0, 5.2, 8.2];
     fov = 50;
@@ -100,6 +96,7 @@ export function GameScene({ cards, shaking, tableFlipped, onCardClick }: Props) 
 
   return (
     <Canvas
+      key={`${isPortrait}-${isMobile}`}
       shadows
       dpr={[1, 1.5]}
       camera={{ position: camPos, fov }}
