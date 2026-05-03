@@ -2,16 +2,15 @@ import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
-/** Céu azul de dia ensolarado com leve gradiente */
 function DaySky() {
   const tex = useMemo(() => {
     const c = document.createElement("canvas");
     c.width = 16; c.height = 256;
     const ctx = c.getContext("2d")!;
     const g = ctx.createLinearGradient(0, 0, 0, 256);
-    g.addColorStop(0, "#3b8ad9");      // topo azul vivo
-    g.addColorStop(0.55, "#7fc1ec");   // azul claro
-    g.addColorStop(1, "#fef3b8");      // horizonte amarelo claro
+    g.addColorStop(0, "#3b8ad9");
+    g.addColorStop(0.55, "#7fc1ec");
+    g.addColorStop(1, "#fef3b8");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 16, 256);
     const t = new THREE.CanvasTexture(c);
@@ -26,7 +25,6 @@ function DaySky() {
   );
 }
 
-/** Nuvens fofas low-poly que flutuam */
 function Cloud({ position, scale = 1 }: { position: [number, number, number]; scale?: number }) {
   const ref = useRef<THREE.Group>(null);
   const mat = useMemo(
@@ -47,7 +45,6 @@ function Cloud({ position, scale = 1 }: { position: [number, number, number]; sc
   );
 }
 
-/** Colinas suaves no horizonte (azuladas) */
 function Hills() {
   const mat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#5a9ad0", roughness: 1, flatShading: true }), []);
   const peaks = [
@@ -67,7 +64,6 @@ function Hills() {
   );
 }
 
-/** Árvore low-poly: tronco azulado escuro + folhagem amarelo-esverdeada */
 function Tree({ position, scale = 1, leafColor = "#f6d24a" }: { position: [number, number, number]; scale?: number; leafColor?: string }) {
   const trunk = useMemo(() => new THREE.MeshStandardMaterial({ color: "#2c4a6a", roughness: 0.95, flatShading: true }), []);
   const leaf = useMemo(() => new THREE.MeshStandardMaterial({ color: leafColor, roughness: 0.85, flatShading: true }), [leafColor]);
@@ -89,7 +85,6 @@ function Tree({ position, scale = 1, leafColor = "#f6d24a" }: { position: [numbe
   );
 }
 
-/** Pedra azulada */
 function Rock({ position, scale = 1 }: { position: [number, number, number]; scale?: number }) {
   const mat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#6a8aae", roughness: 1, flatShading: true }), []);
   return (
@@ -99,7 +94,6 @@ function Rock({ position, scale = 1 }: { position: [number, number, number]; sca
   );
 }
 
-/** Flor amarelinha (substitui grama marrom) */
 function Flower({ position }: { position: [number, number, number] }) {
   const stem = useMemo(() => new THREE.MeshStandardMaterial({ color: "#3a7a8a", flatShading: true }), []);
   const petal = useMemo(() => new THREE.MeshStandardMaterial({ color: "#ffd84a", emissive: "#a07020", emissiveIntensity: 0.3, flatShading: true }), []);
@@ -124,7 +118,6 @@ function Flower({ position }: { position: [number, number, number] }) {
   );
 }
 
-/** Lago azul vibrante */
 function Pond({ position }: { position: [number, number, number] }) {
   const ref = useRef<THREE.Mesh>(null);
   const mat = useMemo(() => new THREE.MeshStandardMaterial({
@@ -142,7 +135,6 @@ function Pond({ position }: { position: [number, number, number] }) {
   );
 }
 
-/** Borboletas amarelas que esvoaçam */
 function Butterflies({ count = 14 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
   const { positions, seeds } = useMemo(() => {
@@ -186,27 +178,19 @@ function Butterflies({ count = 14 }: { count?: number }) {
   );
 }
 
-/**
- * Diorama low-poly de jardim ENSOLARADO.
- * Paleta: azuis e amarelos. Sem marrom no chão / na plataforma.
- */
 export function CafeDiorama() {
   const ground = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#7ec96a", roughness: 1, flatShading: true }),
     [],
   );
-  // Plataforma agora é azul vibrante com borda amarela
   const platform = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#3a7ec0", roughness: 0.6, flatShading: true }),
     [],
   );
 
-  // Posições de árvores espalhadas em vários "anéis" para parecer um bosque,
-  // não uma fileira. Mistura escalas e cores.
   const trees = useMemo(
     () =>
       [
-        // anel longe (fundo)
         [-9.0, -7.5, 1.6, "#f6d24a"],
         [-6.2, -8.2, 1.4, "#ffe070"],
         [-3.0, -8.8, 1.7, "#9ad96a"],
@@ -214,19 +198,16 @@ export function CafeDiorama() {
         [3.8, -8.6, 1.6, "#ffe060"],
         [6.8, -8.0, 1.3, "#bfe080"],
         [9.2, -7.2, 1.5, "#f6d24a"],
-        // anel meio
         [-8.5, -4.5, 1.2, "#ffe070"],
         [-4.8, -5.8, 1.0, "#9ad96a"],
         [-1.5, -6.4, 1.3, "#f6d24a"],
         [2.2, -6.2, 1.1, "#ffe060"],
         [5.4, -5.5, 1.4, "#f0c040"],
         [8.8, -4.8, 1.1, "#bfe080"],
-        // laterais
         [-9.5, -1.5, 1.3, "#f0c040"],
         [9.6, -1.2, 1.2, "#ffe060"],
         [-8.8, 1.2, 1.0, "#9ad96a"],
         [9.0, 1.5, 1.1, "#f6d24a"],
-        // alguns na frente (fora da plataforma)
         [-7.2, 4.5, 0.95, "#ffe070"],
         [7.5, 4.8, 1.0, "#f0c040"],
       ] as const,
@@ -235,50 +216,44 @@ export function CafeDiorama() {
 
   return (
     <group>
-      {/* CÉU verde — só grama, sem azul */}
       <mesh position={[0, 8, -22]}>
         <planeGeometry args={[120, 60]} />
         <meshBasicMaterial color="#7ec96a" />
       </mesh>
 
-      {/* CHÃO - grama vibrante (bem grande pra cobrir o horizonte) */}
       <mesh material={ground} position={[0, -0.85, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <circleGeometry args={[40, 32]} />
       </mesh>
 
-      {/* PLATAFORMA azul */}
       <mesh material={platform} position={[0, -0.6, 0]} receiveShadow castShadow>
         <cylinderGeometry args={[3.4, 3.6, 0.3, 16]} />
       </mesh>
-      {/* anel decorativo amarelo */}
       <mesh position={[0, -0.44, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[3.0, 3.3, 16]} />
         <meshStandardMaterial color="#ffd84a" side={THREE.DoubleSide} flatShading emissive="#a07020" emissiveIntensity={0.2} />
       </mesh>
 
-      {/* LAGOS — afastados das cartas (lateral esquerda e canto traseiro direito) */}
       <Pond position={[-4.8, -0.83, -1.0]} />
-      <Pond position={[5.5, -0.83, 4.5]} />
       <Rock position={[-3.4, -0.7, -0.2]} scale={0.8} />
       <Rock position={[-6.2, -0.7, -0.8]} scale={1.1} />
       <Rock position={[-4.2, -0.7, -2.8]} scale={0.9} />
       <Rock position={[-6.5, -0.7, 1.5]} scale={0.7} />
-      <Rock position={[4.8, -0.7, 5.6]} scale={0.8} />
-      <Rock position={[6.6, -0.7, 3.4]} scale={0.9} />
 
-      {/* Pedras laterais espalhadas */}
+      <Pond position={[1.5, -0.83, 5.5]} />
+      <Rock position={[0.8, -0.6, 5.8]} scale={1.4} />
+      <Rock position={[-0.6, -0.6, 6.5]} scale={1.2} />
+      <Rock position={[-1.2, -0.6, 4.8]} scale={1.3} />
+
       <Rock position={[6.4, -0.7, 0.8]} scale={0.9} />
       <Rock position={[5.8, -0.7, -2.2]} scale={0.8} />
       <Rock position={[-7.8, -0.7, -5.0]} scale={1.1} />
       <Rock position={[7.2, -0.7, -4.5]} scale={1.0} />
       <Rock position={[-5.2, -0.7, 4.0]} scale={0.7} />
 
-      {/* ÁRVORES — bosque dinâmico em vários anéis */}
       {trees.map(([x, z, s, c], i) => (
         <Tree key={i} position={[x as number, -0.85, z as number]} scale={s as number} leafColor={c as string} />
       ))}
 
-      {/* FLORES espalhadas */}
       <Flower position={[-2.0, -0.85, 2.6]} />
       <Flower position={[2.2, -0.85, 2.6]} />
       <Flower position={[-1.0, -0.85, 3.4]} />
@@ -295,7 +270,6 @@ export function CafeDiorama() {
       <Flower position={[3.5, -0.85, -6.2]} />
       <Flower position={[0, -0.85, -7.0]} />
 
-      {/* BORBOLETAS amarelas */}
       <Butterflies count={20} />
     </group>
   );

@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { CafeDiorama } from "./CafeDiorama";
+import { CafeDiorama } from "./Forest";
 import { Card3D } from "./Card3D";
 import { MemoryCard } from "../types";
 
