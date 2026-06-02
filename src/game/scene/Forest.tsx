@@ -233,6 +233,7 @@ export function CafeDiorama() {
         <meshStandardMaterial color="#ffd84a" side={THREE.DoubleSide} flatShading emissive="#a07020" emissiveIntensity={0.2} />
       </mesh>
 
+      {/* Lago e pedras */}
       <Pond position={[-4.8, -0.83, -1.0]} />
       <Rock position={[-3.4, -0.7, -0.2]} scale={0.8} />
       <Rock position={[-6.2, -0.7, -0.8]} scale={1.1} />
@@ -254,6 +255,7 @@ export function CafeDiorama() {
         <Tree key={i} position={[x as number, -0.85, z as number]} scale={s as number} leafColor={c as string} />
       ))}
 
+      {/* Flores */}
       <Flower position={[-2.0, -0.85, 2.6]} />
       <Flower position={[2.2, -0.85, 2.6]} />
       <Flower position={[-1.0, -0.85, 3.4]} />
