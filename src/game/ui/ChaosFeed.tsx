@@ -14,7 +14,6 @@ const COLOR_BY_TYPE: Record<ChaosEvent["type"], string> = {
   swapClick:    "from-emerald-300/80 to-sky-500/80",
 };
 
-/** Pequenos toasts no canto superior direito — sem ocupar a tela. */
 export function ChaosFeed({ events }: Props) {
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
