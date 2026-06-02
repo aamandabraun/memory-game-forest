@@ -67,26 +67,21 @@ export function Card3D({ card, position, tableFlipped, onClick }: Props) {
       onPointerOver={(e) => { e.stopPropagation(); hover.current = true; document.body.style.cursor = "pointer"; }}
       onPointerOut={() => { hover.current = false; document.body.style.cursor = "default"; }}
     >
-      {/* Costas (face para baixo no estado inicial) */}
       <mesh material={backMat} castShadow receiveShadow>
         <boxGeometry args={[W, H, D]} />
       </mesh>
-      {/* Losango dourado nas COSTAS (face inferior) */}
       <mesh position={[0, -H / 2 - 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[W * 0.42, W * 0.5, 4]} />
         <meshStandardMaterial color="#ffd84a" side={THREE.DoubleSide} flatShading emissive="#806020" emissiveIntensity={0.3} />
       </mesh>
-      {/* Frente (face superior) */}
       <mesh material={frontMat} position={[0, H / 2 + 0.001, 0]} rotation={[Math.PI, 0, 0]}>
         <boxGeometry args={[W * 0.92, 0.005, D * 0.94]} />
       </mesh>
-      {/* Losango dourado na FRENTE (face superior) */}
       <mesh position={[0, H / 2 + 0.006, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[W * 0.45, W * 0.5, 4]} />
         <meshStandardMaterial color="#ffd84a" side={THREE.DoubleSide} flatShading emissive="#806020" emissiveIntensity={0.25} />
       </mesh>
 
-      {/* Conteúdo da face: vazio ou 1 bicho. Quando a mesa vira, contra-rotacionamos o bicho pra ficar de pé */}
       {showFace && !card.empty && (
         <group
           position={[0, H / 2 + 0.05, 0]}
@@ -96,7 +91,6 @@ export function Card3D({ card, position, tableFlipped, onClick }: Props) {
         </group>
       )}
 
-      {/* Carta vazia: marca discreta */}
       {showFace && card.empty && (
         <mesh position={[0, H / 2 + 0.06, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <ringGeometry args={[0.12, 0.18, 16]} />
@@ -104,7 +98,6 @@ export function Card3D({ card, position, tableFlipped, onClick }: Props) {
         </mesh>
       )}
 
-      {/* Bicho espiando: cabecinha aparece pela borda da carta abaixada */}
       {!showFace && card.peeking && !card.empty && (
         <PeekingHead symbol={card.displayedSymbol} cardW={W} cardD={D} />
       )}
